@@ -10,8 +10,10 @@ const Navbar = () => {
 
   const links = [
     <li key="home"><Link to="/">Home</Link></li>,
-    user && <li key="profile"><Link to="/profile">Profile</Link></li>,
-    user && <li key="update-profile"><Link to="/profile/update">Update Profile</Link></li>,
+    <li key="allmovies"><Link to="/allmovies">All Movies</Link></li>,
+    <li key="faq"><Link to="/faq">FAQ</Link></li>,
+    user && <li key="addmovies"><Link to="/user/addmovies">Add Movies</Link></li>,
+    user && <li key="favmovies"><Link to="/user/favmovies">Favorite Movies</Link></li>,
   ];
 
   return (
@@ -81,12 +83,12 @@ const Navbar = () => {
         ) : (
           <div className='flex'>
             <button
-              className="btn btn-primary py-3 px-6 rounded-3xl min-h-0 h-auto mr-2"
+              className="btn btn-primary py-2 px-5 md:py-3 md:px-6 rounded-3xl min-h-0 h-auto mr-2"
               onClick={() => navigate("/auth/login")}>
               Login
             </button>
             <button
-              className="btn btn-primary py-3 px-6 rounded-3xl min-h-0 h-auto mr-2"
+              className="btn btn-primary py-2 px-5 md:py-3 md:px-6 rounded-3xl min-h-0 h-auto "
               onClick={() => navigate("/auth/register")}>
               Register
             </button>
