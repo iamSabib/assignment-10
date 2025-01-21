@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
 import { Link, useNavigate } from 'react-router';
 import { PiTreeEvergreenFill } from "react-icons/pi";
+import { PiPopcornFill } from "react-icons/pi";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -40,11 +41,11 @@ const Navbar = () => {
         </div>
         <Link
           to="/"
-          
+
         >
           <div className="btn btn-ghost text-2xl  italic flex items-center pl-0 md:pl-4 gap-2 flex-col">
-          <PiTreeEvergreenFill className="text-green-500" />
-          <span className="text-center hidden sm:block font-bold">Eco Adventure</span>
+            <PiPopcornFill className="text-yellow-400" />
+            <span className="text-center hidden sm:block font-bold">Movie Mania</span>
           </div>
         </Link>
       </div>
@@ -77,11 +78,18 @@ const Navbar = () => {
             </button>
           </div>
         ) : (
-          <button
-            className="btn btn-primary py-3 px-6 rounded-3xl min-h-0 h-auto mr-2"
-            onClick={() => navigate("/auth/login")}>
-            Login
-          </button>
+          <div className='flex'> 
+            <button
+              className="btn btn-primary py-3 px-6 rounded-3xl min-h-0 h-auto mr-2"
+              onClick={() => navigate("/auth/login")}>
+              Login
+            </button>
+            <button
+              className="btn btn-primary py-3 px-6 rounded-3xl min-h-0 h-auto mr-2"
+              onClick={() => navigate("/auth/register")}>
+              Register
+            </button>
+          </div>
         )}
       </div>
     </div>
