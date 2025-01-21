@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Rating } from "react-simple-star-rating";
+import Swal from "sweetalert2";
+
 
 const MovieForm = () => {
     const [rating, setRating] = useState(0);
@@ -58,8 +60,34 @@ const MovieForm = () => {
             rating,
             summary,
         });
-        alert("Movie successfully added!");
+
+        const movie = { poster, title, genres, duration, year, rating, summary };
+        try {
+            fetch("http://localhost:5000/user/addmovies", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(movie),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                });
+        } catch (error) {
+            console.error("Error:", error);
+        }
+
+        Swal.fire({
+            title: "Movie successfully added!",
+            icon: "success",
+            draggable: true
+          });
+        // alert("Movie successfully added!");
+        form.reset();
+        setRating(0);
     };
+
 
     return (
         <div className="min-h-[calc(100vh-264px)] mt-5">
@@ -84,7 +112,7 @@ const MovieForm = () => {
                         <label className="label">
                             <span className="label-text">Genre (multiple selection)</span>
                         </label>
-                        <select name="genres" className="select select-bordered"  required multiple>
+                        <select name="genres" className="select select-bordered" required multiple>
                             <option value="comedy">Comedy</option>
                             <option value="drama">Drama</option>
                             <option value="horror">Horror</option>
@@ -108,28 +136,30 @@ const MovieForm = () => {
                         </label>
                         <input type="number" name="year" placeholder="Release Year" className="input input-bordered" required />
                     </div>
-                    <div className="form-control flex">
+                    <div className="form-control flex ">
                         <label className="label">
                             <span className="label-text">Rating</span>
                         </label>
-                        <div className="">
-                            <Rating onClick={handleRating}  
-                            SVGclassName={'inline-block'}
-                            ratingValue={rating}
-                            allowFraction={true}
-                            showTooltip
-                            tooltipArray={[
-                                'Terrible',
-                                'Terrible+',
-                                'Bad',
-                                'Bad+',
-                                'Average',
-                                'Average+',
-                                'Great',
-                                'Great+',
-                                'Awesome',
-                                'Awesome+'
-                              ]}
+                        <div className=" flex ">
+                            <Rating onClick={handleRating}
+                                initialValue={rating}
+                                SVGclassName={'inline-block'}
+                                ratingValue={rating}
+                                allowFraction={true}
+                                transition={true}
+                                showTooltip
+                                tooltipArray={[
+                                    'Terrible',
+                                    'Terrible+',
+                                    'Bad',
+                                    'Bad+',
+                                    'Average',
+                                    'Average+',
+                                    'Great',
+                                    'Great+',
+                                    'Awesome',
+                                    'Awesome+'
+                                ]}
                             />
                         </div>
                     </div>
