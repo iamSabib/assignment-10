@@ -51,19 +51,19 @@ const MovieForm = () => {
         }
 
         setFormError("");
-        console.log({
-            poster,
-            title,
-            genres,
-            duration,
-            year,
-            rating,
-            summary,
-        });
+        // console.log({
+        //     poster,
+        //     title,
+        //     genres,
+        //     duration,
+        //     year,
+        //     rating,
+        //     summary,
+        // });
 
         const movie = { poster, title, genres, duration, year, rating, summary };
         try {
-            fetch("http://localhost:5000/user/addmovies", {
+            fetch("https://assignment-10-server-one-coral.vercel.app/user/addmovies", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -72,7 +72,7 @@ const MovieForm = () => {
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log(data);
+                    // console.log(data);
                 });
         } catch (error) {
             console.error("Error:", error);
