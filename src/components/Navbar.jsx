@@ -58,27 +58,28 @@ const Navbar = () => {
       </div>
 
       {/* Navbar End: User Profile and Buttons */}
-      <div className="navbar-end space-x-4">
+      <div className="navbar-end ">
         {user ? (
-          <div className="flex items-center gap-4">
-            {/* User Info */}
-            <div className="flex items-center gap-2">
-              <div className="text-end sm:text-base text-sm">{user.displayName}</div>
-              <div className="avatar">
-                <div className="w-10 rounded-full">
-                  <img alt="User Avatar" src={user.photoURL} />
-                </div>
+          <div className="dropdown dropdown-end">
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full">
+                <img alt="User Avatar" src={user.photoURL} />
               </div>
             </div>
-            {/* Logout Button */}
-            <button
-              className="btn btn-outline py-2 px-4 rounded-3xl min-h-0 h-auto"
-              onClick={() => logOut()}>
-              Logout
-            </button>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+              <li>
+                <button className='btn-disabled'>
+                {user.displayName}
+                </button>
+                </li>
+              <li><button onClick={() => logOut()}>
+                Logout</button></li>
+            </ul>
           </div>
         ) : (
-          <div className='flex'> 
+          <div className='flex'>
             <button
               className="btn btn-primary py-3 px-6 rounded-3xl min-h-0 h-auto mr-2"
               onClick={() => navigate("/auth/login")}>
