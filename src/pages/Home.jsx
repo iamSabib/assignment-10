@@ -2,6 +2,7 @@ import React from 'react';
 import { useLoaderData } from 'react-router-dom';
 import MovieCard from '../components/Moviecard';
 import MoviesWatchtime from '../components/MoviesWatchtime';
+import { Link } from 'react-router-dom';
 
 
 const Home = () => {
@@ -81,6 +82,12 @@ const Home = () => {
                         })
                     }
                 </div>
+
+                <Link to='/allmovies'>
+                    <button className='btn btn-primary mx-auto flex mt-10'>
+                        See All Movies
+                    </button>
+                </Link>
 
             </div>
 

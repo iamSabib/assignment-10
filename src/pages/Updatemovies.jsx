@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { Rating } from "react-simple-star-rating";
 import Swal from "sweetalert2";
+import Loading from "../components/Loading";
 
 const Updatemovies = () => {
     const { poster, title, genres, duration, year, rating, summary, _id } = useLoaderData();
     const [movieRating, setMovieRating] = useState(rating);
     const [formError, setFormError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleRating = (rate) => {
         setMovieRating(rate);
@@ -55,8 +57,8 @@ const Updatemovies = () => {
         setFormError("");
 
         const updatedMovie = { poster, title, genres, duration, year, rating: movieRating, summary };
-        console.log(updatedMovie);
-
+        // console.log(updatedMovie);
+        setLoading(true);
         fetch(`http://localhost:5000/updatemovies/${_id}`, {
             method: "PUT",
             headers: {
@@ -66,7 +68,8 @@ const Updatemovies = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
+                // console.log(data);
+                setLoading(false);
                 if (data.matchedCount) {
                     Swal.fire({
                         title: "Movie Updated Successfully!",
@@ -90,6 +93,12 @@ const Updatemovies = () => {
                 });
             });
     };
+
+    if (loading) {
+        return (
+           <Loading></Loading>
+        );
+    }
 
     return (
         <div className="min-h-[calc(100vh-264px)] mt-5">

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Rating } from "react-simple-star-rating";
 import Swal from "sweetalert2";
+import Loading from "../components/Loading";
 
 
 const MovieForm = () => {
     const [rating, setRating] = useState(0);
     const [formError, setFormError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleRating = (rate) => {
         setRating(rate);
@@ -63,6 +65,7 @@ const MovieForm = () => {
 
         const movie = { poster, title, genres, duration, year, rating, summary };
         try {
+            setLoading(true);
             fetch("https://assignment-10-server-one-coral.vercel.app/user/addmovies", {
                 method: "POST",
                 headers: {
@@ -72,6 +75,7 @@ const MovieForm = () => {
             })
                 .then((response) => response.json())
                 .then((data) => {
+                    setLoading(false);
                     // console.log(data);
                 });
         } catch (error) {
@@ -88,6 +92,11 @@ const MovieForm = () => {
         setRating(0);
     };
 
+    if (loading) {
+        return (
+            <Loading></Loading>
+        );
+    }
 
     return (
         <div className="min-h-[calc(100vh-264px)] mt-5">

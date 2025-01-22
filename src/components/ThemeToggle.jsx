@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
 
 const ThemeToggle = () => {
-  
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    return localStorage.getItem('theme') === 'dark';
+   
+    const storedTheme = localStorage.getItem('theme');
+    return storedTheme === 'dark';
   });
 
-  
   useEffect(() => {
+    
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+    
+    
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
 
   const handleToggle = (event) => {
     const isChecked = event.target.checked;
-    setIsDarkMode(isChecked);
-    toggleTheme(isChecked); 
+    setIsDarkMode(isChecked);  // Update the state 
   };
 
   return (
