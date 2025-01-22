@@ -3,12 +3,15 @@ import { AuthContext } from '../provider/AuthProvider';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router';
 import { FcGoogle } from "react-icons/fc";
+import { useLocation } from 'react-router-dom';
 
 
 const Register = () => {
 
     const { userRegister, setProfile, displayName, setUser, signInWithGoogle } = useContext(AuthContext);
+    const location = useLocation();
     const navigate = useNavigate();
+    // console.log(location.state)
 
     const [passwordError, setPasswordError] = useState('');
     const [formError, setFormError] = useState('')
@@ -48,7 +51,7 @@ const Register = () => {
             // console.log("Success Profile", userName, userPhotoUrl);
             setFormError('');
             e.target.reset();
-            navigate("/")
+            navigate(location?.state ? location.state : "/"); //dont know
 
         } catch (e) {
             setFormError(e.code);

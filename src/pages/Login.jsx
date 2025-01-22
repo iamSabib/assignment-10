@@ -96,7 +96,7 @@ const Login = () => {
                         <button className='flex gap-2 items-center justify-center btn btn-neutral' onClick={()=>googleLogin()}>Sign in with Google <FcGoogle className='text-xl' /> </button>
                     </div>
                     <div className='divider'></div>
-                    <Link to={"/auth/register"} className=' mb-10 w-full flex flex-col  max-w-[464px] mx-auto px-8 ' >
+                    <Link to={"/auth/register"} state={location.state} className=' mb-10 w-full flex flex-col  max-w-[464px] mx-auto px-8 ' >
                         <button className='flex gap-2 items-center justify-center btn btn-neutral' >Register</button>
                     </Link>
             </div>

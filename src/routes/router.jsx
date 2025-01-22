@@ -13,6 +13,8 @@ import Addmovies from '../pages/Addmovies';
 import Favmovies from '../pages/Favmovies';
 import Allmovies from '../pages/Allmovies';
 import Faq from '../pages/Faq';
+import Page404 from '../pages/Page404';
+import Detailsmovie from '../pages/Detailsmovie';
 
 
 const router = createBrowserRouter([
@@ -23,9 +25,26 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Home />,
+                // https://assignment-10-server-one-coral.vercel.app/getfeaturemovies
+                loader: () => fetch('https://assignment-10-server-one-coral.vercel.app/getfeaturemovies')
             },
-            {path: "/allmovies", element: <Allmovies />},
-            {path: "/faq", element: <Faq />}
+            { path: "/allmovies", element: <Allmovies /> },
+            { path: "/faq", element: <Faq /> }
+        ],
+    },
+    {
+        path: "/movies",
+        element: (
+        <PrivateRoute>
+            <HomeLayout />
+        </PrivateRoute>
+        ),
+        children: [
+            {
+                path: "/movies/:id",
+                element: <Detailsmovie />,
+                loader: ({ params }) => fetch(`http://localhost:5000/movies/${params.id}`),
+            }
         ],
     },
     {
@@ -49,6 +68,12 @@ const router = createBrowserRouter([
             { path: "/user/favmovies", element: <Favmovies /> },
         ]
     },
+    {
+        path: "*",
+        element: (
+            <Page404 />
+        ),
+    }
     // {
     //     path: "movies",
     //     element: (
