@@ -3,10 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { Rating } from 'react-simple-star-rating';
 import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
+import Loading from './Loading';
+import 'react-toastify/dist/ReactToastify.css';
+import { AuthContext } from '../provider/AuthProvider';
+import { useContext } from 'react';
+
 
 const MovieDetails = ({ poster, title, genres, duration, year, rating, summary, _id }) => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+    const { user } = useContext(AuthContext);
 
     const handleDelete = async () => {
         Swal.fire({
@@ -21,7 +27,7 @@ const MovieDetails = ({ poster, title, genres, duration, year, rating, summary, 
             if (result.isConfirmed) {
                 setIsLoading(true);
                 try {
-                    const response = await fetch(`/api/movies/${_id}`, {
+                    const response = await fetch(`http://localhost:5000/movies/${_id}`, {
                         method: 'DELETE',
                     });
                     setIsLoading(false);
@@ -30,9 +36,10 @@ const MovieDetails = ({ poster, title, genres, duration, year, rating, summary, 
                             title: "Deleted!",
                             text: "Your file has been deleted.",
                             icon: "success",
-                        }).then(() => {
-                            navigate('/all-movies');
+                            timer: 1500, // Automatically closes the alert after 1.5 seconds
+                            showConfirmButton: false, // Hides the OK button
                         });
+                        navigate('/'); // Navigate immediately after showing the success message
                     } else {
                         const errorData = await response.json();
                         toast.error(`Failed to delete the movie: ${errorData.message}`);
@@ -46,19 +53,27 @@ const MovieDetails = ({ poster, title, genres, duration, year, rating, summary, 
         });
     };
 
+
     const handleFavorite = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch(`/api/favorites`, {
+            const response = await fetch(`http://localhost:5000/addtofavorite`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ movieId: _id }),
+                //body will send userEmail and movieId, user.email is the email of the logged in user
+                body: JSON.stringify({ userEmail: user.email, movieId: _id }),
             });
             setIsLoading(false);
             if (response.ok) {
-                toast.success('Movie added to favorites!');
+                Swal.fire({
+                    title: "Added to Favorites!",
+                    text: "Your movie has been added to favorites.",
+                    icon: "success",
+                    timer: 1500, // Automatically closes the alert after 1.5 seconds
+                    showConfirmButton: false, // Hides the OK button
+                });
             } else {
                 const errorData = await response.json();
                 toast.error(`Failed to add to favorites: ${errorData.message}`);
@@ -69,6 +84,10 @@ const MovieDetails = ({ poster, title, genres, duration, year, rating, summary, 
             toast.error('Something went wrong. Please try again.');
         }
     };
+
+    if (isLoading) {
+        return <Loading />;
+    }
 
     return (
         <div className="card card-side bg-base-100 shadow-xl mx-auto max-w-4xl">

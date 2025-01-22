@@ -7,6 +7,7 @@ import { PiPopcornFill } from "react-icons/pi";
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
+  // console.log(user.email);
 
   const links = [
     <li key="home"><Link to="/">Home</Link></li>,
