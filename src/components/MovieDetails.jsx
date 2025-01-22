@@ -85,8 +85,10 @@ const MovieDetails = ({ poster, title, genres, duration, year, rating, summary, 
         }
     };
 
-    const handleUpdate = () => {
-        navigate(`/movies/update/${_id}`);
+    const  handleUpdate = async () => {
+        setIsLoading(true);
+        await navigate(`/movies/update/${_id}`);
+        setIsLoading(false);
     };
 
     if (isLoading) {

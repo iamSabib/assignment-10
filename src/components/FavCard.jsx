@@ -1,14 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';    
 import { Rating } from 'react-simple-star-rating';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../provider/AuthProvider';
+import Loading from './Loading';
 
 
 
 const FavCard = ({ poster, title, genres, duration, year, rating, summary, _id , handleRemoveMovie}) => {
 
     const {user} = useContext(AuthContext);
+    const [loading, setLoading] = useState(false);
     
     const handleRemove = () => {
         Swal.fire({
@@ -22,11 +24,12 @@ const FavCard = ({ poster, title, genres, duration, year, rating, summary, _id ,
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
+                    setLoading(true);
                     // Call API to delete the movie
                     const response = await fetch(`https://assignment-10-server-one-coral.vercel.app/deletefavorite/${user.email}/${_id}`, {
                         method: 'DELETE',
                     });
-    
+                    setLoading(false);
                     if (response.ok) {
                         // Remove movie from local state
                         handleRemoveMovie(_id);
@@ -58,7 +61,9 @@ const FavCard = ({ poster, title, genres, duration, year, rating, summary, _id ,
         });
     };
     
-    
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <div className="card card-side bg-base-100 shadow-xl max-w-2xl ">

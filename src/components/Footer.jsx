@@ -1,12 +1,11 @@
 import React from 'react';
-import { PiTreeEvergreenFill } from "react-icons/pi";
-import { PiPopcornFill } from "react-icons/pi";
+import Logo from '../../public/logo.svg';
 
 const Footer = () => {
     return (
         <footer className="footer bg-base-200 text-base-content p-10">
   <aside>
-    <img src="/public/logo.svg" className='w-12' alt="" />
+    <img src={Logo} className='w-16' alt="" />
     <p>
       Movie Mania
       <br />
