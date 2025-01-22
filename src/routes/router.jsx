@@ -28,7 +28,11 @@ const router = createBrowserRouter([
                 // https://assignment-10-server-one-coral.vercel.app/getfeaturemovies
                 loader: () => fetch('https://assignment-10-server-one-coral.vercel.app/getfeaturemovies')
             },
-            { path: "/allmovies", element: <Allmovies /> },
+            { 
+                path: "/allmovies", 
+                element: <Allmovies />, 
+                loader: () => fetch('https://assignment-10-server-one-coral.vercel.app/allmovies') 
+            },
             { path: "/faq", element: <Faq /> }
         ],
     },

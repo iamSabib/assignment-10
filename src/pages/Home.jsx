@@ -7,7 +7,7 @@ import MoviesWatchtime from '../components/MoviesWatchtime';
 const Home = () => {
 
     const movies = useLoaderData();
-    console.log(movies);
+    // console.log(movies);
 
     return (
         <div>
