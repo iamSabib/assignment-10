@@ -3,6 +3,7 @@ import { AuthContext } from '../provider/AuthProvider';
 import { Link, useNavigate } from 'react-router';
 import { PiTreeEvergreenFill } from "react-icons/pi";
 import { PiPopcornFill } from "react-icons/pi";
+import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -14,7 +15,7 @@ const Navbar = () => {
     <li key="allmovies"><Link to="/allmovies">All Movies</Link></li>,
     <li key="faq"><Link to="/faq">FAQ</Link></li>,
     user && <li key="addmovies"><Link to="/user/addmovies">Add Movies</Link></li>,
-    user && <li key="favmovies"><Link to="/user/favmovies">Favorite Movies</Link></li>,
+    user && <li key="favmovies"><Link to={`/user/favmovies/${user.email}`}>Favorite Movies</Link></li>,
   ];
 
   return (
@@ -74,9 +75,9 @@ const Navbar = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
               <li>
                 <button className='btn-disabled'>
-                {user.displayName}
+                  {user.displayName}
                 </button>
-                </li>
+              </li>
               <li><button onClick={() => logOut()}>
                 Logout</button></li>
             </ul>
@@ -95,7 +96,9 @@ const Navbar = () => {
             </button>
           </div>
         )}
+        <ThemeToggle></ThemeToggle>
       </div>
+
     </div>
   );
 };

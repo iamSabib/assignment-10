@@ -5,11 +5,11 @@ import MovieDetails from '../components/MovieDetails';
 
 const Detailsmovie = () => {
     const movie = useLoaderData();
-    console.log(movie);
+    // console.log(movie);
     return (
         
-        <div>
-            Movie Details
+        <div className='mb-32'>
+            <h2 className='text-center my-10 text-3xl font-bold'>Movie Details</h2>
             <MovieDetails {...movie}></MovieDetails>
         </div>
     );

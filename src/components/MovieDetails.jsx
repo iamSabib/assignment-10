@@ -27,7 +27,7 @@ const MovieDetails = ({ poster, title, genres, duration, year, rating, summary, 
             if (result.isConfirmed) {
                 setIsLoading(true);
                 try {
-                    const response = await fetch(`http://localhost:5000/movies/${_id}`, {
+                    const response = await fetch(`https://assignment-10-server-one-coral.vercel.app/movies/${_id}`, {
                         method: 'DELETE',
                     });
                     setIsLoading(false);
@@ -39,7 +39,7 @@ const MovieDetails = ({ poster, title, genres, duration, year, rating, summary, 
                             timer: 1500, // Automatically closes the alert after 1.5 seconds
                             showConfirmButton: false, // Hides the OK button
                         });
-                        navigate('/'); // Navigate immediately after showing the success message
+                        navigate('/allmovies'); // Navigate immediately after showing the success message
                     } else {
                         const errorData = await response.json();
                         toast.error(`Failed to delete the movie: ${errorData.message}`);
@@ -57,7 +57,7 @@ const MovieDetails = ({ poster, title, genres, duration, year, rating, summary, 
     const handleFavorite = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch(`http://localhost:5000/addtofavorite`, {
+            const response = await fetch(`https://assignment-10-server-one-coral.vercel.app/addtofavorite`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -83,6 +83,10 @@ const MovieDetails = ({ poster, title, genres, duration, year, rating, summary, 
             console.error('Error adding movie to favorites:', error);
             toast.error('Something went wrong. Please try again.');
         }
+    };
+
+    const handleUpdate = () => {
+        navigate(`/movies/update/${_id}`);
     };
 
     if (isLoading) {
@@ -125,6 +129,12 @@ const MovieDetails = ({ poster, title, genres, duration, year, rating, summary, 
                     />
                 </div>
                 <div className="card-actions justify-end gap-3">
+                    <button
+                        className={`btn btn-accent ${isLoading ? 'loading' : ''}`}
+                        onClick={handleUpdate}
+                    >
+                        Update Movie
+                    </button>
                     <button
                         className={`btn btn-error ${isLoading ? 'loading' : ''}`}
                         onClick={handleDelete}
