@@ -4,7 +4,7 @@ Welcome to **Movie Mania**, an engaging movie portal where users can explore mov
 
 ## Live Site
 
-You can access the live site here: [Movie Mania](https://movie-project-0.web.app/)
+You can access the live site here: [Movie Mania](https://movie-mania-0.web.app/)
 
 ## Features
 
